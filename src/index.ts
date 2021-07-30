@@ -1,4 +1,3 @@
-import Test from './Test'
+import Editor from './Editor'
 
-
-export default Test;
+export default Editor;

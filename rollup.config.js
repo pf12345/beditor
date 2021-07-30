@@ -8,12 +8,14 @@ import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
 import external from 'rollup-plugin-peer-deps-external';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 export default {
   input: "./src/index.ts",
   output: {
     file: './dist/index.js',
     format: 'es',
-    plugins: [terser()]
+    plugins: isDev ? [] : [terser()]
   },
   plugins: [
     // 需要使用，避免重复使用重复依赖，解决react非法hook调用问题: https://zh-hans.reactjs.org/warnings/invalid-hook-call-warning.html

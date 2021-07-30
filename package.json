@@ -4,8 +4,8 @@
   "description": "基于slate的，类似飞书的react富文本编辑器",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "rollup -c -w",
-    "start": "cross-env NODE_ENV=development && bisheng start -c ./site/bisheng.config.js"
+    "dev": "cross-env NODE_ENV=development rollup -c -w",
+    "start": "cross-env NODE_ENV=development bisheng start -c ./site/bisheng.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "bisheng-plugin-react": "^1.1.2",
     "bisheng-plugin-toc": "^0.4.4",
     "cross-env": "^7.0.0",
+    "less": "^4.1.1",
     "postcss": "^8.3.6",
     "react-helmet-async": "^1.0.4",
     "rollup-plugin-babel": "^4.4.0",
