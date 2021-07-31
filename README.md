@@ -1,5 +1,5 @@
 # beditor
-基于slate的react富文本编辑器
+react富文本编辑器
 
 ## 开发
 

@@ -13,9 +13,10 @@ const isDev = process.env.NODE_ENV === 'development';
 export default {
   input: "./src/index.ts",
   output: {
-    file: './dist/index.js',
     format: 'es',
-    plugins: isDev ? [] : [terser()]
+    plugins: isDev ? [] : [terser()],
+    file: './dist/index.js',
+    inlineDynamicImports: true
   },
   plugins: [
     // 需要使用，避免重复使用重复依赖，解决react非法hook调用问题: https://zh-hans.reactjs.org/warnings/invalid-hook-call-warning.html
@@ -26,7 +27,11 @@ export default {
       plugins: [autoprefixer()],
       sourceMap: true,
       extract: false,
-      minimize: true
+      minimize: true,
+      use : [
+        'sass', 
+        ['less', { javascriptEnabled: true }]
+      ],
     }),
     typescript({
       tsconfigDefaults: { compilerOptions: { declaration: true } },
@@ -39,6 +44,12 @@ export default {
       exclude: "node_modules/**", 
       presets: [['@babel/preset-env', { modules: false }], '@babel/preset-react'],
     }),
+    nodeResolve({
+      jsnext: true,
+      main: true,
+      extensions: [...DEFAULT_EXTENSIONS, '.js', '.ts', '.tsx'],
+      dedupe: ["react", "@aomao/engine", "filesize"] // 解决同一依赖包重复打入
+    }),
     commonjs({
       include: /node_modules/,
       exclude: [
@@ -47,13 +58,11 @@ export default {
       namedExports: {
         'react': ['createElement', 'Component', 'useState' ],
         'react-dom': ['render'],
-        'esrever': ['reverse']
+        'esrever': ['reverse'],
+        'eventemitter2': ['EventEmitter2'],
+        'diff-match-patch': ['diff_match_patch', 'DIFF_DELETE', 'DIFF_INSERT', 'DIFF_EQUAL'],
+        'node_modules/react-is/index.js': ['isMemo', 'isFragment']
       }
-    }),
-    nodeResolve({
-      jsnext: true,
-      main: true,
-      extensions: [...DEFAULT_EXTENSIONS, '.js', '.ts', '.tsx']
     }),
   ],
   watch: {
