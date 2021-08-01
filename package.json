@@ -1,15 +1,24 @@
 {
   "name": "beditor",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "react富文本编辑器",
   "main": "dist/index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup -c -w",
     "start": "cross-env NODE_ENV=development bisheng start -c ./site/bisheng.config.js",
-    "build": "cross-env NODE_ENV=production rollup -c"
+    "build": "cross-env NODE_ENV=production rollup -c",
+    "publish": "npm run build && npm publish"
   },
+  "files": [
+    "dist/*",
+    "src/*",
+    ".gitignore",
+    "package.json",
+    "README.md"
+  ],
   "author": "",
   "license": "ISC",
+  "registry": "https://registry.npmjs.org/",
   "devDependencies": {
     "@aomao/engine": "^2.3.3",
     "@aomao/plugin-alignment": "^2.3.4",

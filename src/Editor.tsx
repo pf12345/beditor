@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Engine from '@aomao/engine';
+import Engine, { View } from '@aomao/engine';
 import { ToolbarPlugin, ToolbarComponent } from '@aomao/toolbar';
 import options from './options';
 import Toolbar from './ToolBar';
 import './style/index.less'
 
-const Editor = (props) => {
-  const { onChange, value = '', toolClass = '', editorClass = '' } = props || {};
+const Editor = ({ onChange, value = '', toolClass = '', editorClass = '' }) => {
   //Editor container
   const ref = useRef<HTMLDivElement | null>(null);
   //Engine instance
-  const [engine, setEngine] = useState();
+  const [engine, setEngine] = useState(null);
   //Editor content
   const [content, setContent] = useState<string>(value);
 
@@ -34,17 +33,36 @@ const Editor = (props) => {
     _engine.setValue(content);
     //Listen to the editor value change event
     _engine.on('change', (value) => {
+      const view = new View('.b-editor .editor-view', {
+        plugins: [...options.plugins],
+        cards: [
+          ...options.cards,
+        ],
+      });
+      view.render(value);
       setContent(value);
-      onChange && onChange(value);
+      const element: Element | null = document.querySelector('.b-editor .editor-view');
+      if(element) {
+        // console.log('112233', element.innerHTML)
+        onChange && onChange(value, element.innerHTML);
+      }
     });
     //Set the engine instance
     setEngine(_engine);
   }, []);
+
+  useEffect(() => {
+    if(engine) {
+      engine.setValue(value);
+    }
+    setContent(value);
+  }, [value])
   
   return (
     <div className="b-editor">
       <div className={`tool-bar ${toolClass}`}><Toolbar engine={engine} /></div>
-      <div className="editor-content" ref={ref} />
+      <div className="editor-container"><div className="editor-content" ref={ref} /></div>
+      <div className="editor-view"></div>
     </div>
   );
 };
