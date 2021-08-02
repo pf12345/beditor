@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Engine, { View } from '@aomao/engine';
 import { ToolbarPlugin, ToolbarComponent } from '@aomao/toolbar';
+import Image , { ImageComponent , ImageUploader } from '@aomao/plugin-image';
 import options from './options';
 import Toolbar from './ToolBar';
 import './style/index.less'
 
-const Editor = ({ onChange, value = '', toolClass = '', editorClass = '' }) => {
+const Editor = ({ onChange, value = '', toolClass = '', editorClass = '', imgConfig = {} }) => {
   //Editor container
   const ref = useRef<HTMLDivElement | null>(null);
   //Engine instance
@@ -20,12 +21,24 @@ const Editor = ({ onChange, value = '', toolClass = '', editorClass = '' }) => {
       className: editorClass,
       plugins: [
         ...options.plugins,
+        Image , 
+        ImageUploader,
         ToolbarPlugin,
       ],
       cards: [
         ToolbarComponent,
+        ImageComponent,
         ...options.cards,
       ],
+      config: {
+        ...options.config,
+        [ImageUploader.pluginName]: {
+          file: {
+            accept: "svg,png,jpg,jpeg,gif,webp"
+          },
+          ...imgConfig
+        },
+      }
     });
     //Initialize local collaboration to record history
     _engine.ot.initLockMode();
@@ -34,10 +47,20 @@ const Editor = ({ onChange, value = '', toolClass = '', editorClass = '' }) => {
     //Listen to the editor value change event
     _engine.on('change', (value) => {
       const view = new View('.b-editor .editor-view', {
-        plugins: [...options.plugins],
+        plugins: [Image , ImageUploader, ...options.plugins],
         cards: [
+          ImageComponent,
           ...options.cards,
         ],
+        config: {
+          ...options.config,
+          [ImageUploader.pluginName]: {
+            file: {
+              accept: "svg,png,jpg,jpeg,gif,webp"
+            },
+            ...imgConfig
+          },
+        }
       });
       view.render(value);
       setContent(value);

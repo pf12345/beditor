@@ -1,6 +1,6 @@
 {
   "name": "beditor",
-  "version": "1.0.6",
+  "version": "1.0.11",
   "description": "react富文本编辑器",
   "main": "dist/index.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "@aomao/plugin-fontsize": "^2.3.4",
     "@aomao/plugin-heading": "^2.3.4",
     "@aomao/plugin-hr": "^2.3.4",
-    "@aomao/plugin-image": "^2.3.4",
+    "@aomao/plugin-image": "^2.3.6",
     "@aomao/plugin-indent": "^2.3.4",
     "@aomao/plugin-italic": "^2.3.4",
     "@aomao/plugin-line-height": "^1.1.4",

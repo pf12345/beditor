@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 import Editor from '../../../dist/index'
 
+const editorConfig = {
+  imgConfig: {
+    file: {
+      action: '/api/oss/uploadForm',
+      accept: "svg,png,jpg,jpeg,gif,webp"
+    },
+    remote: {
+      action: '/api/oss/uploadForm',
+    }
+  }
+}
+
 export default (props) => {
   const [value, setValue] = useState('');
   setTimeout(() => {
@@ -12,6 +24,7 @@ export default (props) => {
       <Editor 
         value={value} 
         placeholder="请输入markdown..."
+        {...editorConfig}
       />
     </div>
   )

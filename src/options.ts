@@ -61,6 +61,9 @@ export default {
     HrComponent,
     TableComponent,
     MathComponent,
-    CheckboxComponent
-  ]
+    CheckboxComponent,
+  ],
+  config: {
+    
+  }
 }
