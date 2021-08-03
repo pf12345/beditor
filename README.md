@@ -12,17 +12,19 @@ import React, { useState } from 'react';
 import Editor from 'beditor'
 
 const editorConfig = {
+  // 上传图片配置
   imgConfig: {
     file: {
-      action: '/api/oss/uploadForm',
+      action: '/api/uploadForm',
       accept: "svg,png,jpg,jpeg,gif,webp"
     },
     remote: {
-      action: '/api/oss/uploadForm',
+      action: '/api/uploadForm',
     }
   },
+  // 上传视频配置
   videoConfig: {
-    action: '/api/oss/uploadForm'
+    action: '/api/uploadForm'
   }
 }
 
