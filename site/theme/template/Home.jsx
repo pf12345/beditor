@@ -10,6 +10,9 @@ const editorConfig = {
     remote: {
       action: '/api/oss/uploadForm',
     }
+  },
+  videoConfig: {
+    action: '/api/oss/uploadForm'
   }
 }
 

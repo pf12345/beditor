@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import Engine, { View } from '@aomao/engine';
 import { ToolbarPlugin, ToolbarComponent } from '@aomao/toolbar';
 import Image , { ImageComponent , ImageUploader } from '@aomao/plugin-image';
+import Video , { VideoComponent , VideoUploader } from '@aomao/plugin-video';
 import options from './options';
 import Toolbar from './ToolBar';
 import './style/index.less'
 
-const Editor = ({ onChange, value = '', toolClass = '', editorClass = '', imgConfig = {} }) => {
+const Editor = ({ onChange, value = '', toolClass = '', editorClass = '', imgConfig = {}, videoConfig = {} }) => {
   //Editor container
   const ref = useRef<HTMLDivElement | null>(null);
   //Engine instance
@@ -24,10 +25,13 @@ const Editor = ({ onChange, value = '', toolClass = '', editorClass = '', imgCon
         Image , 
         ImageUploader,
         ToolbarPlugin,
+        Video, 
+        VideoUploader
       ],
       cards: [
         ToolbarComponent,
         ImageComponent,
+        VideoComponent,
         ...options.cards,
       ],
       config: {
@@ -38,6 +42,10 @@ const Editor = ({ onChange, value = '', toolClass = '', editorClass = '', imgCon
           },
           ...imgConfig
         },
+        [VideoUploader.pluginName]: {
+          accept: 'mp4',
+          ...videoConfig
+        }
       }
     });
     //Initialize local collaboration to record history
@@ -47,9 +55,10 @@ const Editor = ({ onChange, value = '', toolClass = '', editorClass = '', imgCon
     //Listen to the editor value change event
     _engine.on('change', (value) => {
       const view = new View('.b-editor .editor-view', {
-        plugins: [Image , ImageUploader, ...options.plugins],
+        plugins: [Image , ImageUploader, Video , VideoUploader, ...options.plugins],
         cards: [
           ImageComponent,
+          VideoComponent,
           ...options.cards,
         ],
         config: {
@@ -60,6 +69,9 @@ const Editor = ({ onChange, value = '', toolClass = '', editorClass = '', imgCon
             },
             ...imgConfig
           },
+          [VideoUploader.pluginName]: {
+            ...videoConfig
+          }
         }
       });
       view.render(value);
