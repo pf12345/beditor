@@ -8,6 +8,7 @@ npm install beditor --save-dev
 
 ## 使用
 ```js
+import React, { useState } from 'react';
 import Editor from 'beditor'
 
 const editorConfig = {
